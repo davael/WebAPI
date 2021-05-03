@@ -1,10 +1,8 @@
-﻿using APITienda.Data;
+﻿using System;
+using APITienda.Data;
 using APITienda.Models;
 using APITienda.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace APITienda.Repository
@@ -13,19 +11,15 @@ namespace APITienda.Repository
     {
         private readonly ApplicationDbContext _bd;
 
-        public PersonaRepository(ApplicationDbContext bd): base (bd)
+        public PersonaRepository(ApplicationDbContext bd) : base(bd)
         {
             _bd = bd;
         }
 
-        public async Task<bool> ExistePersona(string td, string nd)
-        {
-            return await _bd.Persona.AnyAsync(c => c.TipoDoc.ToLower() == td.ToLower() && c.NroDoc.ToLower() == nd.ToLower());
-        }
-        
-        public async Task<Persona> GetPersona(string td, string nd)
-        {
-            return await _bd.Persona.FirstOrDefaultAsync(c => c.TipoDoc.ToLower() == td.ToLower() && c.NroDoc.ToLower() == nd.ToLower());
-        }
+        public async Task<bool> ExistePersona(string tipoDocumento, string numeroDocumento) =>
+            await _bd.Persona.AnyAsync(c => string.Equals(c.TipoDoc, tipoDocumento, StringComparison.CurrentCultureIgnoreCase) && string.Equals(c.NroDoc, numeroDocumento, StringComparison.CurrentCultureIgnoreCase));
+
+        public async Task<Persona> GetPersona(string tipoDocumento, string numeroDocumento) =>
+            await _bd.Persona.FirstOrDefaultAsync(c => String.Equals(c.TipoDoc, tipoDocumento, StringComparison.CurrentCultureIgnoreCase) && String.Equals(c.NroDoc, numeroDocumento, StringComparison.CurrentCultureIgnoreCase));
     }
 }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using APITienda.Models;
+﻿using APITienda.Models;
 using APITienda.Models.DTOs;
 using APITienda.Repository.IRepository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace APITienda.Controllers
 {
@@ -27,12 +25,12 @@ namespace APITienda.Controllers
         /// Obtener todas las personas.
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetPersonas()
+        [HttpGet(Name = nameof(GetPersonas))]
+        public async Task<ActionResult<List<PersonaDto>>> GetPersonas()
         {
             var listaPersonas = await _perRepo.GetAllAsync();
             var listaPersonasDTO = _mapper.Map<List<PersonaDto>>(listaPersonas);
-            return Ok(listaPersonasDTO);
+            return listaPersonasDTO;
         }
 
         /// <summary>
@@ -40,17 +38,17 @@ namespace APITienda.Controllers
         /// </summary>
         /// <param name="personaDto"> Esta es la persona que se va a crear</param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> PostPersona([FromBody] PersonaDto personaDto)
+        [HttpPost(Name = nameof(CrearPersona))]
+        public async Task<ActionResult> CrearPersona(PersonaDto personaDto)
         {
-            if(personaDto == null)
+            if (personaDto is null)
             {
                 return BadRequest(ModelState);
             }
-            if( await _perRepo.ExistePersona(personaDto.TipoDoc,personaDto.NroDoc))
+            if (await _perRepo.ExistePersona(personaDto.TipoDoc, personaDto.NroDoc))
             {
                 ModelState.AddModelError("", "La persona ya existe");
-                return StatusCode(404, ModelState);
+                return BadRequest(ModelState);
             }
             var persona = _mapper.Map<Persona>(personaDto);
 
@@ -59,7 +57,7 @@ namespace APITienda.Controllers
                 ModelState.AddModelError("", $"Error al guardar la persona {persona.Apellido}");
                 return StatusCode(500, ModelState);
             }
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>
@@ -69,21 +67,20 @@ namespace APITienda.Controllers
         /// <param name="personaDto">Objeto Completo persona</param>
         /// <returns>Devuelve NoContent si fue todo correctamente</returns>
 
-        [HttpPut("{perid:int}", Name ="PutPersona")]
-        public async Task<IActionResult> PutPersona(int perid, [FromBody] PersonaDto personaDto)
+        [HttpPut("{perid:int}", Name = nameof(ActualizarPersona))]
+        public async Task<ActionResult> ActualizarPersona(int perid, PersonaDto personaDto)
         {
-            if (personaDto == null || personaDto.Id != perid)
+            if (personaDto is null || personaDto.Id != perid)
             {
                 return BadRequest(ModelState);
             }
             var persona = _mapper.Map<Persona>(personaDto);
-            if (! await _perRepo.UpdateAsync(perid,persona))
+            if (!await _perRepo.UpdateAsync(perid, persona))
             {
                 ModelState.AddModelError("", $"Error al guardar la persona {persona.Apellido}");
                 return StatusCode(500, ModelState);
             }
             return NoContent();
-
         }
     }
 }
