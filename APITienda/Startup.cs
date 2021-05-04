@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting; 
 
 namespace APITienda
 {
@@ -23,8 +23,8 @@ namespace APITienda
             services
                 .AddControllers()
                 .AddNewtonsoftJson(options =>
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                );
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services
                 .AddAutoMapper(typeof(MiMapper))
@@ -52,9 +52,9 @@ namespace APITienda
                 })
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                });
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

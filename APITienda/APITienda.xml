@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>APITienda</name>
+    </assembly>
+    <members>
+        <member name="M:APITienda.Controllers.PersonasController.GetPersonas">
+            <summary>
+            Obtener todas las personas.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:APITienda.Controllers.PersonasController.CrearPersona(APITienda.Models.DTOs.PersonaDto)">
+            <summary>
+            Crear nueva persona
+            </summary>
+            <param name="personaDto"> Esta es la persona que se va a crear</param>
+            <returns></returns>
+        </member>
+        <member name="M:APITienda.Controllers.PersonasController.PutPersona(System.Int32,APITienda.Models.DTOs.PersonaDto)">
+            <summary>
+            Actualizar Persona
+            </summary>
+            <param name="perid">id de persona</param>
+            <param name="personaDto">Objeto Completo persona</param>
+            <returns>Devuelve NoContent si fue todo correctamente</returns>
+        </member>
+        <member name="M:APITienda.Startup.AddDB(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Crea la Conexion a la BD
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:APITienda.Startup.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Agrega Swagger al proyecto.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:APITienda.Startup.AddAllScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Incorpora scoped entre Repositorios e Interfaces
+            </summary>
+            <param name="services"></param>
+        </member>
+    </members>
+</doc>

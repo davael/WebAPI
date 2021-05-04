@@ -6,7 +6,7 @@ namespace APITienda.Models.DTOs
     public class PersonaDto
     {
         public int Id { get; set; }
-        
+     
         [Required]
         public string TipoDoc { get; set; }
         

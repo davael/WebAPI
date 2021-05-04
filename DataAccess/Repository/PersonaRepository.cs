@@ -17,9 +17,9 @@ namespace APITienda.Repository
         }
 
         public async Task<bool> ExistePersona(string tipoDocumento, string numeroDocumento) =>
-            await _bd.Persona.AnyAsync(c => string.Equals(c.TipoDoc, tipoDocumento, StringComparison.CurrentCultureIgnoreCase) && string.Equals(c.NroDoc, numeroDocumento, StringComparison.CurrentCultureIgnoreCase));
+                    await _bd.Persona.AnyAsync(c => string.Equals(c.TipoDoc, tipoDocumento, StringComparison.CurrentCultureIgnoreCase) && string.Equals(c.NroDoc, numeroDocumento, StringComparison.CurrentCultureIgnoreCase));
 
         public async Task<Persona> GetPersona(string tipoDocumento, string numeroDocumento) =>
-            await _bd.Persona.FirstOrDefaultAsync(c => String.Equals(c.TipoDoc, tipoDocumento, StringComparison.CurrentCultureIgnoreCase) && String.Equals(c.NroDoc, numeroDocumento, StringComparison.CurrentCultureIgnoreCase));
+                    await _bd.Persona.FirstOrDefaultAsync(c => String.Equals(c.TipoDoc, tipoDocumento, StringComparison.CurrentCultureIgnoreCase) && String.Equals(c.NroDoc, numeroDocumento, StringComparison.CurrentCultureIgnoreCase));
     }
 }
